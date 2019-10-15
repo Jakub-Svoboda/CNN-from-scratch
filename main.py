@@ -17,11 +17,12 @@ def loadDataset():
 					break
 				dataInt.append(int(num))	
 			data = np.array(dataInt)
-			data = data.reshape((28,28))
+			#data = data.reshape((28,28))
 			dataset.append(data)
 			label = np.zeros((10,1))
 			label[int(row[786])][0] = 1
-			labels.append(label)
+			label = label.reshape(10,)
+			labels.append(label) 		#transpose for having (1,10) shape
 			lineCount += 1
 	dataset = np.array(dataset)
 	dataset = (dataset - np.min(dataset))/np.ptp(dataset)
@@ -35,19 +36,11 @@ def main(args=None):
 	dataset, labels = loadDataset()
 	print("Dataset loaded, dataset shape:", dataset.shape, ", labels shape:", labels.shape)
 
-	myNet = Network(dataset, labels)
-	print("outShape", myNet.output.shape)
+	myNet = Network()
 	myNet.addLayer(Dense(28, 28, 28, 28))
-	myNet.addLayer(Dense(28, 28, 10, 1))
-	myNet.addLayer(Dense(10, 1, 10, 1))
+	myNet.addLayer(Dense(28, 28, 1, 10))
 
-
-	myNet.feedForward(myNet.dataset[0])
-	#print(myNet.output)
-	#print(myNet.output.shape)
-
-	#for layer in myNet.layers:
-		#print(layer.weights.shape)
+	myNet.fit(dataset, labels, 0.001, 10)
 		
 if __name__== "__main__":
 	main()
