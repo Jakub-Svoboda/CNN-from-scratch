@@ -1,25 +1,33 @@
 import numpy as np
 import activations
 
-
-class Dense():
-	
+class Neuron():
 	def __init__(self, width, height):
 		self.width = width
 		self.height = height
-		self.weights = np.zeros((self.width, self.height))
+		self.weights = np.random.rand(self.width, self.height)
 
 	def forward(self, inputs):
-		print(inputs.shape, self.weights.shape)
-		layerOutput = np.zeros(((self.width, self.height)))
+		#print("forward pass of neuron", inputs.shape, self.weights.shape)
+		#res = np.sum(np.outer(inputs, self.weights))	
+		res = np.dot(inputs.flatten(), self.weights.flatten())
+		return res				
+
+class Dense():
+	
+	def __init__(self, width, height, outWidth, outHeight):
+		self.width = width
+		self.height = height
+		self.neurons = [[Neuron(self.width, self.height) for j in range(outWidth)] for i in range(outHeight)]
+
+	def forward(self, inputs):
+		#print(inputs.shape, self.neurons.shape)
+		print("Forward pass of layer")
+		layerOutput = np.zeros(((self.outWidth, self.outHeight)))
 		for idx, row in enumerate(layerOutput):
 			for idx2, col in enumerate(row): #for each neuron
-				res = 0
-				w = self.weights[idx][idx2]
-				for i in inputs:
-					for j in i:
-						res += w*j
-							
+				res = self.neurons[idx][idx2].forward(inputs)
+				#print(res)							
 
 				layerOutput[idx][idx2] = activations.sigmoid(res)
 		#layerOutput =  activations.sigmoid(np.dot(inputs, self.weights)) #dot product = sum of multiplications
@@ -41,9 +49,10 @@ class Network():
 
 	def feedForward(self, inp):
 		inp = inp
-		for layer in self.layers:
+		for layer in self.layers[:-1]:
 			inp = layer.forward(inp)
 		self.output = inp	
+		print(self.output)
 
 	'''def backprop(self):
 		# application of the chain rule to find derivative of the loss function with respect to weights2 and weights1

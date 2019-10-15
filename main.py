@@ -24,6 +24,7 @@ def loadDataset():
 			labels.append(label)
 			lineCount += 1
 	dataset = np.array(dataset)
+	dataset = (dataset - np.min(dataset))/np.ptp(dataset)
 	labels = np.array(labels)	
 	return dataset, labels	
 
@@ -36,9 +37,10 @@ def main(args=None):
 
 	myNet = Network(dataset, labels)
 	print("outShape", myNet.output.shape)
-	myNet.addLayer(Dense(28, 28))
-	myNet.addLayer(Dense(28, 28))
-	myNet.addLayer(Dense(10, 1))
+	myNet.addLayer(Dense(28, 28, 28, 28))
+	myNet.addLayer(Dense(28, 28, 10, 1))
+	myNet.addLayer(Dense(10, 1, 10, 1))
+
 
 	myNet.feedForward(myNet.dataset[0])
 	#print(myNet.output)
