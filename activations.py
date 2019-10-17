@@ -25,3 +25,9 @@ def sigmoid(x):
 
 def sigmoidDerivative(x):
     return x * (1.0 - x)
+
+def ReLU(x):
+    return x * (x > 0)
+
+def ReLUDerivative(x):
+    return 1. * (x > 0)

@@ -1,4 +1,4 @@
-from network import *
+from network import Network, Dense
 import csv
 import numpy as np
 import random
@@ -40,7 +40,7 @@ def main(args=None):
 	myNet.addLayer(Dense(28, 28, 28, 28))
 	myNet.addLayer(Dense(28, 28, 1, 10))
 
-	myNet.fit(dataset, labels, 0.001, 10)
+	myNet.fit(dataset, labels, 0.0003, 3)
 		
 if __name__== "__main__":
 	main()
