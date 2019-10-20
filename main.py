@@ -25,12 +25,13 @@ def loadDataset():
 			labels.append(label) 		#transpose for having (1,10) shape
 			lineCount += 1
 	dataset = np.array(dataset)
-	dataset = (dataset - np.min(dataset))/np.ptp(dataset) + 0.5 #normalize to (-0.5,0.5)
+	dataset = (dataset / 255) - 0.5 #normalize to (-0.5,0.5)
 	labels = np.array(labels)	
 	return dataset, labels	
 
 def main(args=None):
-	random.seed(42)
+	random.seed(42)		#obsolete?
+	np.random.seed(42)	
 
 	print("Loading dataset...")
 	dataset, labels = loadDataset()
@@ -42,7 +43,7 @@ def main(args=None):
 	myNet.addLayer(network.Softmax(13*13*8, 10))
 
 
-	myNet.fit(dataset[:1000], labels[:1000], 0.0003, 3)			#TODO right now the dataset size is limited
+	myNet.fit(dataset[:1000], labels[:1000], 0.005, 10)			#TODO right now the dataset size is limited
 		
 if __name__== "__main__":
 	main()
