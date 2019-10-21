@@ -1,7 +1,6 @@
 import numpy as np
 import activations
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
 import pickle
 
 def saveModel(net, path = "model.pckl"):
@@ -24,10 +23,6 @@ def loadModel(path = "model.pckl"):
 		print("Loading model failed.")	
 		exit(1)	
 
-def plot(arr):
-	plt.matshow(arr)
-	plt.colorbar()
-	plt.show()
 
 class Conv3x3:
 	# A Convolution layer using 3x3 filters.
