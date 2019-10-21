@@ -13,8 +13,8 @@ def splitDataset(dataset, labels, split):
 	dataset, testDataset, labels, testLabels = train_test_split(dataset, labels, test_size = split, random_state = 42)	
 	return dataset, labels, testDataset, testLabels
 
-def loadDataset():
-	with open("dataset/mnist-tr.inp") as csv_file:
+def loadDataset(path):
+	with open(path) as csv_file:
 		csv_reader = csv.reader(csv_file, delimiter=' ')
 		lineCount = 0
 		dataset = []
@@ -54,10 +54,11 @@ def main(args=None):
 	args = setArguments(args)	
 
 	print("Loading dataset...")
-	dataset, labels = loadDataset()
+	dataset, labels = loadDataset("dataset/mnist-tr.inp")
 	dataset, labels, valDataset, valLabels = splitDataset(dataset, labels, 0.1)
+	testDataset, testLabels = loadDataset("dataset/mnist-tk.inp")
 	print("Dataset loaded, dataset shape:", dataset.shape, ", labels shape:", labels.shape)
-	print("Test dataset loaded, shape:", valDataset.shape, "test labels shape:", valLabels.shape)
+	print("Validation dataset loaded, shape:", valDataset.shape, "validation labels shape:", valLabels.shape)
 
 	if args.train > 0: 				#create network and train
 		myNet = network.Network()
@@ -69,7 +70,7 @@ def main(args=None):
 	else:							#load model from disk
 		myNet = network.loadModel(args.load)
 
-	myNet.test(valDataset, valLabels)
+	myNet.test(testDataset, testLabels)
 	
 if __name__== "__main__":
 	main()
