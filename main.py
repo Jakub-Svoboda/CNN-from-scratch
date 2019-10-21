@@ -14,7 +14,7 @@ def splitDataset(dataset, labels, split):
 	return dataset, labels, testDataset, testLabels
 
 def loadDataset():
-	with open("dataset/mnist-tk.inp") as csv_file:
+	with open("dataset/mnist-tr.inp") as csv_file:
 		csv_reader = csv.reader(csv_file, delimiter=' ')
 		lineCount = 0
 		dataset = []
@@ -55,7 +55,7 @@ def main(args=None):
 
 	print("Loading dataset...")
 	dataset, labels = loadDataset()
-	dataset, labels, testDataset, testLabels = splitDataset(dataset, labels, 0.1)
+	dataset, labels, valDataset, valLabels = splitDataset(dataset, labels, 0.1)
 	print("Dataset loaded, dataset shape:", dataset.shape, ", labels shape:", labels.shape)
 	print("Test dataset loaded, shape:", testDataset.shape, "test labels shape:", testLabels.shape)
 
@@ -69,7 +69,7 @@ def main(args=None):
 	else:							#load model from disk
 		myNet = network.loadModel(args.load)
 
-	myNet.test(testDataset, testLabels)
+	myNet.test(valDataset, valLabels)
 	
 if __name__== "__main__":
 	main()
