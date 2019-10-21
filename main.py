@@ -57,7 +57,7 @@ def main(args=None):
 	dataset, labels = loadDataset()
 	dataset, labels, valDataset, valLabels = splitDataset(dataset, labels, 0.1)
 	print("Dataset loaded, dataset shape:", dataset.shape, ", labels shape:", labels.shape)
-	print("Test dataset loaded, shape:", testDataset.shape, "test labels shape:", testLabels.shape)
+	print("Test dataset loaded, shape:", valDataset.shape, "test labels shape:", valLabels.shape)
 
 	if args.train > 0: 				#create network and train
 		myNet = network.Network()
