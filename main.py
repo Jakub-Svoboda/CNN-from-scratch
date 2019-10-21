@@ -64,12 +64,12 @@ def main(args=None):
 		myNet.addLayer(network.Conv3x3(8))
 		myNet.addLayer(network.MaxPool2x2())
 		myNet.addLayer(network.Softmax(13*13*8, 10))
-		myNet.fit(dataset[:1000], labels[:1000], 0.005, args.train)			#TODO right now the dataset size is limited
+		myNet.fit(dataset, labels, 0.005, args.train)			#TODO right now the dataset size is limited
 		network.saveModel(myNet)
 	else:							#load model from disk
 		myNet = network.loadModel(args.load)
 
-	myNet.test(testDataset[:1000], testLabels[:1000])
+	myNet.test(testDataset, testLabels)
 	
 if __name__== "__main__":
 	main()
