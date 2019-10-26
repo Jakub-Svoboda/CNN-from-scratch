@@ -1,3 +1,7 @@
+#SFC project - CNN from scratch
+#Author: Jakub Svoboda 
+#Date: 2019-10-26
+
 import math
 import numpy as np
 import warnings
