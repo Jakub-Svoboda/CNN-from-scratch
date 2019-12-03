@@ -52,7 +52,7 @@ def setArguments(args):
 	parser = argparse.ArgumentParser(description = "Train and evaluation script for CNN.")
 	parser.add_argument("--train", "-t", help = "The amount of training epochs should be used. If 0 or none, the network will not train.", default=0, type = int)
 	parser.add_argument("--save", "-s", help = "Where to save the trained model.", default = "model.pckl", type = str)
-	parser.add_argument("--load", "-l", help = "Model to load.", default = "model.pckl", type = str)
+	parser.add_argument("--load", "-l", help = "Model to load.", default = "model_proper.pckl", type = str)
 	args = parser.parse_args()
 	return args
 
@@ -69,6 +69,7 @@ def main(args=None):
 	testDataset, testLabels = loadDataset("dataset/mnist-tk.inp")
 	print("Dataset loaded, dataset shape:", dataset.shape, ", labels shape:", labels.shape)
 	print("Validation dataset loaded, shape:", valDataset.shape, "validation labels shape:", valLabels.shape)
+	print("Test dataset loaded, shape:", testDataset.shape, "validation labels shape:", testLabels.shape)
 
 	if args.train > 0: 				#create network and train
 		myNet = network.Network()

@@ -12,7 +12,7 @@ def saveModel(net, path = "model.pckl"):
 	#Net is the object containing the network
 	#Path is the path to where to save the file
 	try:
-		myFile = open("model.pckl", 'wb')
+		myFile = open(path, 'wb')
 		pickle.dump(net, myFile)
 		myFile.close()
 		print("Model saved.")
@@ -20,11 +20,11 @@ def saveModel(net, path = "model.pckl"):
 		print("Saving model failed.")	
 		exit(1)
 
-def loadModel(path = "model.pckl"):
+def loadModel(path = "model_proper.pckl"):
 	#Loads model from disk. Uses pickle library.
 	#The path specifies where the model is saved
 	try:
-		with open("model.pckl", 'rb') as myFile:
+		with open(path, 'rb') as myFile:
 			net = pickle.load(myFile)
 			print("Model loaded.")
 			return net
@@ -221,6 +221,15 @@ class Network():
 			accuracy += a
 		print("Network predicted accurately in %.1f%% of cases." % ((accuracy/idx)*100))
 
+	def predict(self, image):
+		for idx, layer in enumerate(self.layers):	#feed forward the network (each layer)
+			if idx == 0:						#send image to the first layer
+				output = layer.feedForward(image)
+			else:								#send previous layer's output 
+				output = layer.feedForward(self.layers[idx-1].layerOutput)	
+
+		#print(output)
+		return np.argmax(output)
 
 
 
